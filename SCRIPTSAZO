@@ -1,0 +1,52 @@
+--Procedimientos almacenados
+--lectura de proveedores
+create proc usp_listaProveedores
+as
+select IdProveedor as Codigo, NombreCompañia as Proveedor, NombreContacto as Contacto,
+Pais as Origen, Ciudad
+ from Proveedores
+--prueba
+exec usp_listaProveedores
+--Lista de clientes por pais
+go
+--lista de paises
+create proc usp_listapais
+as 
+select distinct (Pais) as origen
+from Clientes
+--Lista de clientes por pais
+go
+Create proc usp_ListaClientesPais
+@pais varchar(50)
+as
+Select IdCliente as Codigo, NombreCompañia as Cliente,
+Ciudad, Direccion
+from Clientes where Pais=@pais
+go
+--CREATE PROCEDURES CRUD FOR CATEGORIAS
+
+--INSERT
+CREATE PROC usp_insertar_cate
+@codigo int,
+@nombre varchar(60),
+@detalle varchar(60)
+as
+INSERT Categorias (IdCategoria, NombreCategoria, Descripcion) VALUES (@codigo, @nombre, @detalle)
+go
+--UPDATE
+CREATE PROC usp_update_cate
+@codigo int,
+@nombre varchar(60),
+@detalle varchar(60)
+as
+update Categorias set NombreCategoria=@nombre, Descripcion=@detalle where IdCategoria=@codigo
+go
+--DELETE
+create proc usp_delete_cate
+@codigo int
+as delete from Categorias where IdCategoria=@codigo
+go
+--SELECT
+create proc usp_select_cate
+as
+select IdCategoria,NombreCategoria,Descripcion from Categorias
